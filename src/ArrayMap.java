@@ -176,5 +176,10 @@ public class ArrayMap {
         testMap.removeAll_AltSolution(keys);
         testMap.printList();
         testMap.printRawList();
+
+        int x = 0;
+        double y = 0.5;
+        x = (int)y;
+
     }
 }
