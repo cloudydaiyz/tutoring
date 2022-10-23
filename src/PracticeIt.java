@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class PracticeIt {
     void countBinary(int n){
         // call recursive helper function
@@ -39,5 +42,38 @@ public class PracticeIt {
             countBinary(n, result);
             result.deleteCharAt(result.length()-1); // cut off the end of result
         }
+    }
+
+    boolean searchLinkedListForDuplicates(){
+        LinkedList<Object> ll = new LinkedList<>();
+        for(Object currentElement : ll){
+            for(Object elementToCheck : ll){
+                if(currentElement.equals(elementToCheck)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    boolean searchLinkedListForDuplicatesBestCase() {
+        LinkedList<Object> ll = new LinkedList<>();
+        ll.sort(null); // uses mergesort which is O(nlogn)
+
+        Iterator<Object> it = ll.iterator();
+        Object prevElement = null;
+        if(it.hasNext()){
+            prevElement = it.next();
+        }
+
+        while(it.hasNext()){
+            Object currentElement = it.next();
+            if(prevElement.equals(currentElement)){
+                return true;
+            }
+            prevElement = currentElement;
+        }
+
+        return false;
     }
 }

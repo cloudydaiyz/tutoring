@@ -62,6 +62,65 @@ public class Recursion {
                 3. Continue recursing to the next number
                 4. If digitsLeft is empty, add it to the list of results and end the method
      */
+    public class Position {
+        public int row, col;
+        public Position(int r, int c){
+            row = r;
+            col = c;
+        }
+    }
+    private static final int[][] KNIGHT_DIRECTIONS = {{2, 1}, {2, -1},
+            {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
+    /*
+        Base cases
+        - Knight col = Target col, Knight row = Target row => RETURN TRUE
+        - numMoves == 0, RETURN FALSE
+        - Bound check, RETURN FALSE if out of bounds
+
+        Recursion
+        - Boolean canReach = false
+        - Call method again with each of the knight directions
+        - Return canReach
+     */
+    public boolean knightCanReach(int rows, Position knight, Position target, int numMoves){
+        // Base cases
+        // Knight col = Target col, Knight row = Target row => RETURN TRUE
+        if(knight.row == target.row && knight.col == target.col){
+            return true;
+        }
+        // numMoves == 0, RETURN FALSE
+        else if(numMoves == 0){
+            return false;
+        }
+        // Bound check, RETURN FALSE if out of bounds
+        else if(knight.row < 0 || knight.row >= rows || knight.col < 0 || knight.col >= rows){
+            return false;
+        }
+
+        // Recursion
+        for(int i = 0; i < KNIGHT_DIRECTIONS.length; i++){
+            // make a new position with knight going in this direction
+            Position nextKnightPos = new Position(
+                    knight.row + KNIGHT_DIRECTIONS[i][0],
+                    knight.col + KNIGHT_DIRECTIONS[i][1]);
+            if(knightCanReach(rows, nextKnightPos, target, numMoves - 1)){
+                return true;
+            }
+
+            // OR we can use recursive backtracking
+            // add the knight direction
+            knight.row += KNIGHT_DIRECTIONS[i][0];
+            knight.col += KNIGHT_DIRECTIONS[i][1];
+
+            if(knightCanReach(rows, knight, target, numMoves - 1)){
+                return true;
+            }
+            // undo what we just did
+            knight.row -= KNIGHT_DIRECTIONS[i][0];
+            knight.col -= KNIGHT_DIRECTIONS[i][1];
+        }
+        return false;
+    }
 
     public static void main(String[] args){
         recC1(5);
